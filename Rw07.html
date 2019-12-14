@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset = "UTF-8">
+	<title>Rw07</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="animate.js"></script>
+</head>
+<body>
+	<div class="main">
+		<div class="scroll">
+			<img src="imgs/a15.png" id="lb">
+			<div class="box1" id="box1">
+				<div id="sld">
+				    <span class = "rolp">&nbsp&nbsp[温馨提示]最近有不少不法分子在网上骗人，请大家注意！！！</span>
+		   			<span class = "rolp">&nbsp&nbsp[温馨提示]最近有不少不法分子在网上骗人，请大家注意！！！</span>
+		   			<span class = "rolp">&nbsp&nbsp[温馨提示]最近有不少不法分子在网上骗人，请大家注意！！！</span>
+		    		<span class = "rolp">&nbsp&nbsp[温馨提示]最近有不少不法分子在网上骗人，请大家注意！！！</span>
+		    		<span class = "rolp">&nbsp&nbsp[温馨提示]最近有不少不法分子在网上骗人，请大家注意！！！</span>
+		    		<span class = "rolp">&nbsp&nbsp[温馨提示]最近有不少不法分子在网上骗人，请大家注意！！！</span>
+		    		<span class = "rolp">&nbsp&nbsp[温馨提示]最近有不少不法分子在网上骗人，请大家注意！！！</span>
+		    </div>
+		    </div>
+		</div>
+		<div class="box" id="box">
+			<div class="slider" id="slider">
+				<div class="slide"><img src="imgs/b5.png"></div>
+				<div class="slide"><img src="imgs/b1.png"></div>
+				<div class="slide"><img src="imgs/b2.png"></div>
+				<div class="slide"><img src="imgs/b3.png"></div>
+				<div class="slide"><img src="imgs/b4.png"></div>
+				<div class="slide"><img src="imgs/b5.png"></div>
+				<div class="slide"><img src="imgs/b1.png"></div>
+			</div>
+			<span id="left"><</span>
+			<span id="right">></span>
+			<ul class="nav" id="nav">
+				<li class="act" id="fst">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+			</ul>
+		</div>
+	</div>
+</body>
+<script>
+	var box = document.getElementById('box');
+	var navList = document.getElementById('nav').children;
+	var slider = document.getElementById('slider');
+	var left = document.getElementById('left');
+	var right = document.getElementById('right');
+	var index = 1;
+	var isMoving = false;
+	var j = 1;
+	var sld = document.getElementById('sld');
+	function rolling(){
+		j = j + 0.05;
+		animate(sld,{left: -135 * j},function(){
+			if(j >= 6){
+				sld.style.left = "-135px";
+				j = 1;
+			}
+		});
+	}
+
+	var timer1 = setInterval(rolling,50);
+
+	function next() {
+		index++;
+		nChange();
+		animate(slider,{left: -1200 * index},function(){
+			if(index == 6 || index > 6){
+				slider.style.left = "-1200px";
+				index = 1;
+			}
+		});
+	}
+
+	function prev() {
+		index--;
+		nChange();
+		animate(slider,{left: -1200 * index},function(){
+			if(index == 0 || index < 0){
+				slider.style.left = "-6000px";
+				index = 5;
+			}
+		});
+	}
+
+	var timer = setInterval(next,3000);
+
+	box.onmouseover = function(){
+		animate(left,{opacity: 50});
+		animate(right,{opacity: 50});
+		clearInterval(timer);
+	}
+
+	box.onmouseout = function(){
+		animate(left,{opacity: 0});
+		animate(right,{opacity: 0});
+		timer = setInterval(next,3000);
+	}
+
+	right.onclick = next;
+	left.onclick = prev;
+
+	for(var i = 0; i < navList.length; i++){
+		navList[i].idx = i;
+		navList[i].onclick = function(){
+			index = this.idx + 1;
+			nChange();
+			animate(slider,{left:-1200*index})
+		}
+	}
+
+	function nChange(){
+		for (var i = 0; i < navList.length; i++) {
+			navList[i].className = '';
+		}
+		if (index == 6) {
+			navList[0].className = 'act';
+		} else if(index == 0){
+			navList[4].className = 'act';
+		} else{
+			navList[index - 1].className = 'act';
+		}
+	}
+
+</script>
+</html>
